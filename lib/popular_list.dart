@@ -75,74 +75,80 @@ class _PopularListState extends State<PopularList> {
                               mainAxisSpacing: 20,
                               childAspectRatio: 2 / 3),
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.blue,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.5),
-                                offset: const Offset(
-                                  5.0,
-                                  15.0,
+                        return InkWell(
+                          onTap: (){
+                            print("oke");
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.blue,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.5),
+                                  offset: const Offset(
+                                    5.0,
+                                    15.0,
+                                  ),
+                                  blurRadius: 10.0,
+                                  spreadRadius: -6.0,
                                 ),
-                                blurRadius: 10.0,
-                                spreadRadius: -6.0,
+                              ],
+                              image: DecorationImage(
+                                colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.35),
+                                  BlendMode.multiply,
+                                ),
+                                image: NetworkImage(
+                                    'https://image.tmdb.org/t/p/w185/${_movie[index].posterPath}'),
+                                fit: BoxFit.cover,
                               ),
-                            ],
-                            image: DecorationImage(
-                              colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.35),
-                                BlendMode.multiply,
-                              ),
-                              image: NetworkImage(
-                                  'https://image.tmdb.org/t/p/w185/${_movie[index].posterPath}'),
-                              fit: BoxFit.cover,
                             ),
-                          ),
-                          child: Stack(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(bottom: 10, left: 10),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${_movie[index].releaseDate.substring(5, 7)}/${_movie[index].releaseDate.substring(0, 4)}',
-                                      style:
-                                          const TextStyle(color: Colors.grey, fontWeight: FontWeight.w800),
-                                    ),
-                                    Text(
-                                      _movie[index].title.toUpperCase(),
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(bottom: 10, left: 10),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${_movie[index].releaseDate.substring(5, 7)}/${_movie[index].releaseDate.substring(0, 4)}',
+                                        style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w800),
+                                      ),
+                                      Text(
+                                        _movie[index].title.toUpperCase(),
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 10, left: 115),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.deepOrangeAccent,
+                                        borderRadius: BorderRadius.circular(24)),
+                                    height: 40,
+                                    width: 40,
+                                    child: Center(
+                                        child: Text(
+                                      _movie[index].voteAverage.toString(),
                                       style: const TextStyle(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.w800),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, left: 115),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.deepOrangeAccent,
-                                      borderRadius: BorderRadius.circular(24)),
-                                  height: 40,
-                                  width: 40,
-                                  child: Center(
-                                      child: Text(
-                                    _movie[index].voteAverage.toString(),
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 20),
-                                  )),
-                                ),
-                              )
-                            ],
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 20),
+                                    )),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         );
                       }),
