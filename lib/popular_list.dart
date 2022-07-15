@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:popular_list/detail_page.dart';
 import 'package:popular_list/models/movie.dart';
 import 'package:popular_list/models/movie_api.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -53,28 +54,29 @@ class _PopularListState extends State<PopularList> {
                 Padding(
                   padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
                   child: SmartRefresher(
-                    controller: _refreshController,
-                    enablePullDown: true,
-                    enablePullUp: true,
-                    child: gridViewBuilder(),
-                    onRefresh: () async {
-                      await Future.delayed(const Duration(milliseconds: 1000));
-                      if(_itemcount > 8){
-                        _itemcount = 8;
-                      }
-                      if (mounted) setState(() {});
-                      _refreshController.refreshCompleted();
-                    },
+                      controller: _refreshController,
+                      enablePullDown: true,
+                      enablePullUp: true,
+                      child: gridViewBuilder(),
+                      onRefresh: () async {
+                        await Future.delayed(
+                            const Duration(milliseconds: 1000));
+                        if (_itemcount > 8) {
+                          _itemcount = 8;
+                        }
+                        if (mounted) setState(() {});
+                        _refreshController.refreshCompleted();
+                      },
                       onLoading: () async {
                         //monitor fetch data from network
-                        await Future.delayed(const Duration(milliseconds: 1000));
-                          setState(() {
-                            _itemcount = _itemcount + 8;
-                          });
+                        await Future.delayed(
+                            const Duration(milliseconds: 1000));
+                        setState(() {
+                          _itemcount = _itemcount + 8;
+                        });
                         if (mounted) setState(() {});
                         _refreshController.loadComplete();
-                      }
-                  ),
+                      }),
                 )
               ],
             )),
@@ -104,7 +106,7 @@ class _PopularListState extends State<PopularList> {
 
   GridView gridViewBuilder() {
     return GridView.builder(
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         itemCount: _itemcount,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -115,6 +117,13 @@ class _PopularListState extends State<PopularList> {
           return InkWell(
             onTap: () {
               print(_movie[index].title);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => DetailPage(
+                            title: _movie[index].title,
+                            posterPath: _movie[index].posterPath,
+                          )));
             },
             child: Container(
               decoration: BoxDecoration(
